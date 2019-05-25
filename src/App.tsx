@@ -5,47 +5,68 @@ import { Query } from "react-apollo";
 import SearchField from "./components/SearchField";
 import Repository from "./components/Repository";
 import { CircularProgress } from "@material-ui/core";
-import { css } from "@emotion/core";
 import styled from "@emotion/styled";
+import _ from "lodash";
+import Typography from "@material-ui/core/Typography";
 
 const query = gql`
-  query($text: String!) {
-    search(first: 10, query: $text, type: REPOSITORY) {
+  query($searchText: String!) {
+    search(first: 10, query: $searchText, type: REPOSITORY) {
       nodes {
         ... on Repository {
           id
           name
           description
           url
-          viewerHasStarred
           stargazers {
             totalCount
           }
         }
       }
     }
+    searchText @client
+  }
+`;
+
+const ProgressWrapper = styled("div")`
+  && {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
 const App = () => {
   const [text, setText] = useState<string>("");
+
+  const handleSearchRepository = text => {
+    setText(text);
+  };
+
   return (
     <div className="App">
-      <Query query={query} variables={{ text: text }}>
+      <SearchField text={text} onSearchRepository={handleSearchRepository} />
+      <Query query={query} variables={{ searchText: text }}>
         {({ data, loading, error }: any) => {
-          if (loading) return <CircularProgress />;
+          if (loading)
+            return (
+              <ProgressWrapper>
+                <CircularProgress />
+              </ProgressWrapper>
+            );
           if (error) return `Error! ${error}`;
 
-          const handleSearchRepository = text => {
-            console.log(text);
-            setText(text);
-          };
           return (
             <div>
-              <SearchField
-                text={data.searchText}
-                onSearchRepository={handleSearchRepository}
-              />
+              {_.isEmpty(data.search.nodes) && _.isEmpty(data.searchText) && (
+                <Typography>
+                  検索結果がありません。もう一度検索し直してください。
+                </Typography>
+              )}
               {data.search.nodes.map(repo => {
                 return (
                   <Repository

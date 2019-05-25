@@ -9,8 +9,6 @@ const resolvers = {
         }
       `;
 
-      const data = cache.readQuery({ query });
-      console.log(text, "text");
       cache.writeQuery({
         query,
         data: {

@@ -11,12 +11,21 @@ type Props = {
 
 const Repository = ({ url, name, starCount }: Props) => {
   return (
-    <Card>
+    <Card
+      style={{
+        marginBottom: "20px",
+        border: "1px solid #ccc",
+        maxWidth: "800px",
+        margin: "0 auto 20px auto",
+        textAlign: "left",
+        padding: "10px"
+      }}
+    >
       <Typography>
-        <Link href={url}>{url}</Link>
+        url: <Link href={url}>{url}</Link>
       </Typography>
-      <Typography>{name}</Typography>
-      <Typography>{starCount}</Typography>
+      <Typography>name: {name}</Typography>
+      <Typography>star: {starCount}</Typography>
     </Card>
   );
 };
