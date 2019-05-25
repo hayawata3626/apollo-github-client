@@ -1,32 +1,12 @@
 import React, { useState } from "react";
-import "./App.css";
-import gql from "graphql-tag";
 import { Query } from "react-apollo";
-import SearchField from "./components/SearchField";
-import Repository from "./components/Repository";
 import { CircularProgress } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 import styled from "@emotion/styled";
 import _ from "lodash";
-import Typography from "@material-ui/core/Typography";
-
-const query = gql`
-  query($searchText: String!) {
-    search(first: 10, query: $searchText, type: REPOSITORY) {
-      nodes {
-        ... on Repository {
-          id
-          name
-          description
-          url
-          stargazers {
-            totalCount
-          }
-        }
-      }
-    }
-    searchText @client
-  }
-`;
+import { getRepositories } from "./queries";
+import Repository from "./components/Repository";
+import SearchField from "./components/SearchField";
 
 const ProgressWrapper = styled("div")`
   && {
@@ -48,10 +28,10 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <div>
       <SearchField text={text} onSearchRepository={handleSearchRepository} />
-      <Query query={query} variables={{ searchText: text }}>
-        {({ data, loading, error }: any) => {
+      <Query query={getRepositories} variables={{ searchText: text }}>
+        {({ data, loading, error }) => {
           if (loading)
             return (
               <ProgressWrapper>
@@ -62,9 +42,9 @@ const App = () => {
 
           return (
             <div>
-              {_.isEmpty(data.search.nodes) && _.isEmpty(data.searchText) && (
-                <Typography>
-                  検索結果がありません。もう一度検索し直してください。
+              {_.isEmpty(data.search.nodes) && (
+                <Typography align={"center"}>
+                  検索結果がありません。もう一度検索し直してください&#x1f62d;
                 </Typography>
               )}
               {data.search.nodes.map(repo => {
