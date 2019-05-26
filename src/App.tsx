@@ -38,7 +38,7 @@ const App = () => {
                 <CircularProgress />
               </ProgressWrapper>
             );
-          if (error) return `Error! ${error}`;
+          if (error) return `ERROR: ${error}`;
 
           return (
             <div>

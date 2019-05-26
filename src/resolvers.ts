@@ -2,7 +2,8 @@ import gql from "graphql-tag";
 
 const resolvers = {
   Mutation: {
-    changeValue: (_, { text }, { cache }) => {
+    changeSearchTextValue: (_, { text }, { cache }) => {
+      console.log("called");
       const query = gql`
         query SearchText {
           searchText @client

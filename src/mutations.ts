@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
-export const changeSearchText = gql`
+export const changeSearchTextValue = gql`
   mutation($text: String!) {
-    changeValue(text: $text) @client
+    changeSearchTextValue(text: $text) @client
   }
 `;
