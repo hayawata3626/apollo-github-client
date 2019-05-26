@@ -53,7 +53,7 @@ const App = () => {
                     key={repo.id}
                     url={repo.url}
                     name={repo.name}
-                    starCount={10}
+                    starCount={repo.stargazers.totalCount}
                   />
                 );
               })}

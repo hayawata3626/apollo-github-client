@@ -14,9 +14,7 @@ const cache = new InMemoryCache();
 const httpLink = createHttpLink({
   uri: "https://api.github.com/graphql",
   headers: {
-    authorization: `Bearer ${
-      process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
-    }`
+    authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
   }
 });
 
