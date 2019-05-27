@@ -38,7 +38,7 @@ const App = () => {
                 <CircularProgress />
               </ProgressWrapper>
             );
-          if (error) return `Error! ${error}`;
+          if (error) return `ERROR: ${error}`;
 
           return (
             <div>
@@ -53,7 +53,7 @@ const App = () => {
                     key={repo.id}
                     url={repo.url}
                     name={repo.name}
-                    starCount={10}
+                    starCount={repo.stargazers.totalCount}
                   />
                 );
               })}

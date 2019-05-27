@@ -5,9 +5,8 @@ import { ApolloLink } from "apollo-link";
 import ApolloClient from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { ApolloProvider } from "react-apollo";
-import { withClientState } from "apollo-link-state";
 import initialState from "./state";
-import resolvers from "./resolver";
+import resolvers from "./resolvers";
 import App from "./App";
 
 const cache = new InMemoryCache();
@@ -15,21 +14,17 @@ const cache = new InMemoryCache();
 const httpLink = createHttpLink({
   uri: "https://api.github.com/graphql",
   headers: {
-    authorization: `Bearer ${
-      process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
-    }`
+    authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
   }
 });
 
-const stateLink = withClientState({
-  cache,
-  defaults: initialState,
-  resolvers: resolvers
+const link = ApolloLink.from([httpLink]);
+
+const client = new ApolloClient({ link, cache, resolvers: resolvers });
+
+cache.writeData({
+  data: initialState
 });
-
-const link = ApolloLink.from([stateLink, httpLink]);
-
-const client = new ApolloClient({ link, cache });
 
 ReactDOM.render(
   <ApolloProvider client={client}>
