@@ -5,7 +5,7 @@ import _ from "lodash";
 import styled from "@emotion/styled";
 import { Button } from "@material-ui/core";
 import { useState } from "react";
-import { changeSearchTextValue } from "../mutations";
+import { changeSearchText } from "../mutations";
 
 const TextFieldWrapper = styled("div")`
   display: flex;
@@ -26,11 +26,11 @@ const SearchField = ({ text, onSearchRepository }: Props) => {
   const [inputText, setInputValue] = useState<string>("");
 
   return (
-    <Mutation mutation={changeSearchTextValue} variables={{ text: text }}>
-      {changeSearchTextValue => {
+    <Mutation mutation={changeSearchText} variables={{ text: text }}>
+      {changeSearchText => {
         const handleInputEnter = e => {
           setInputValue(e.target.value);
-          changeSearchTextValue({ variables: { text: e.target.value } });
+          changeSearchText({ variables: { text: e.target.value } });
           if (e.keyCode === 13) {
             onSearchRepository(inputText);
           }
