@@ -30,4 +30,4 @@ const Repository = ({ url, name, starCount }: Props) => {
   );
 };
 
-export default React.memo(Repository);
+export default Repository;

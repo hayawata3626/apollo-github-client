@@ -63,4 +63,4 @@ const SearchField = ({ text, onSearchRepository }: Props) => {
   );
 };
 
-export default React.memo(SearchField);
+export default SearchField;
