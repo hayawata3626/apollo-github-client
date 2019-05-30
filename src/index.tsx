@@ -20,7 +20,7 @@ const httpLink = createHttpLink({
 
 const link = ApolloLink.from([httpLink]);
 
-const client = new ApolloClient({ link, cache, resolvers: resolvers });
+const client = new ApolloClient({ link, cache, resolvers });
 
 cache.writeData({
   data: initialState

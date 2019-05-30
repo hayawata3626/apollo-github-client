@@ -21,7 +21,7 @@ type Props = {
   starCount: number;
 };
 
-const Repository = ({ url, name, starCount }: Props) => {
+const Repository: React.FC<Props> = ({ url, name, starCount }: Props) => {
   return (
     <RepositoryWrapper>
       <Typography>

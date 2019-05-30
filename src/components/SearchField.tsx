@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import { Button } from "@material-ui/core";
 import { useState } from "react";
 import { changeSearchText } from "../mutations";
+import gql from "graphql-tag";
 
 const TextFieldWrapper = styled("div")`
   display: flex;
@@ -22,12 +23,40 @@ type Props = {
   onSearchRepository: (text: string) => void;
 };
 
-const SearchField = ({ text, onSearchRepository }: Props) => {
+const SearchField: React.FC<Props> = ({ text, onSearchRepository }: Props) => {
   const [inputText, setInputValue] = useState<string>("");
 
   return (
-    <Mutation mutation={changeSearchText} variables={{ text: text }}>
-      {changeSearchText => {
+    <Mutation
+      mutation={changeSearchText}
+      variables={{ text: text }}
+      update={cache => {
+        const { searchText } = cache.readQuery({
+          query: gql`
+            query SearchText {
+              searchText @client
+            }
+          `
+        });
+        console.log(searchText, "searchText");
+        // const { todos } = cache.readQuery({ query: GET_TODOS });
+        // cache.writeQuery({
+        //   query: GET_TODOS,
+        //   data: { todos: todos.concat([addTodo]) },
+        // });
+      }}
+    >
+      {(changeSearchText, { client, loading, error }) => {
+        const searchText = client.readQuery({
+          query: gql`
+            query SearchText {
+              searchText @client
+            }
+          `
+        });
+
+        console.log(searchText, "searchText");
+
         const handleInputEnter = e => {
           setInputValue(e.target.value);
           changeSearchText({ variables: { text: e.target.value } });
