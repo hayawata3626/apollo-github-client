@@ -1,11 +1,11 @@
-type InitialState = {
+type State = {
   searchText: string;
   __typename: string;
 };
 
-const initialState: InitialState = {
+const initialState: State = {
   searchText: "",
-  __typename: "SearchText"
+  __typename: "State"
 };
 
 export default initialState;
