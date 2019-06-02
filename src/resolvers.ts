@@ -15,6 +15,27 @@ const resolvers = {
           searchText: text
         }
       });
+    },
+    applyInitialData: (_, { initialData }, { cache }) => {
+      console.log(initialData.accountName, "initialData");
+      cache.writeQuery({
+        query: gql`
+          query InitialData {
+            accountName {
+              id
+              name
+            }
+            categories @client
+          }
+        `,
+        data: {
+          accountName: {
+            ...initialData.accountName,
+            __typename: "AccountName"
+          },
+          categories: [...initialData.categories]
+        }
+      });
     }
   }
 };

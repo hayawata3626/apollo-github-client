@@ -1,0 +1,18 @@
+type Category {
+  id: Int!
+  name: String
+}
+
+type AccountName {
+  id:  Int!
+  name: String!
+}
+
+input InitiallDataInput {
+  name: AccountName!
+  categories: [Category!]
+}
+
+#type Mutation {
+#  applyInitialData(input: InitiallDataInput): Boolean
+#}

@@ -8,6 +8,7 @@ import { ApolloProvider } from "react-apollo";
 import initialState from "./state";
 import resolvers from "./resolvers";
 import App from "./App";
+import { initialData } from "./initialData";
 
 const cache = new InMemoryCache();
 
@@ -28,7 +29,7 @@ cache.writeData({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <App initialData={initialData} />
   </ApolloProvider>,
   document.getElementById("root")
 );

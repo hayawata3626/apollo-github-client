@@ -1,12 +1,13 @@
 import * as React from "react";
 import TextField from "@material-ui/core/TextField";
-import { Mutation } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
 import _ from "lodash";
 import styled from "@emotion/styled";
 import { Button } from "@material-ui/core";
 import { useState } from "react";
 import { changeSearchText } from "../mutations";
 import gql from "graphql-tag";
+import { getAccountName, getSearchText } from "../queries";
 
 const TextFieldWrapper = styled("div")`
   display: flex;
@@ -27,25 +28,7 @@ const SearchField: React.FC<Props> = ({ text, onSearchRepository }: Props) => {
   const [inputText, setInputValue] = useState<string>("");
 
   return (
-    <Mutation
-      mutation={changeSearchText}
-      variables={{ text: text }}
-      update={cache => {
-        const { searchText } = cache.readQuery({
-          query: gql`
-            query SearchText {
-              searchText @client
-            }
-          `
-        });
-        console.log(searchText, "searchText");
-        // const { todos } = cache.readQuery({ query: GET_TODOS });
-        // cache.writeQuery({
-        //   query: GET_TODOS,
-        //   data: { todos: todos.concat([addTodo]) },
-        // });
-      }}
-    >
+    <Mutation mutation={changeSearchText} variables={{ text: text }}>
       {(changeSearchText, { client, loading, error }) => {
         const searchText = client.readQuery({
           query: gql`
@@ -54,8 +37,6 @@ const SearchField: React.FC<Props> = ({ text, onSearchRepository }: Props) => {
             }
           `
         });
-
-        console.log(searchText, "searchText");
 
         const handleInputEnter = e => {
           setInputValue(e.target.value);
@@ -85,6 +66,15 @@ const SearchField: React.FC<Props> = ({ text, onSearchRepository }: Props) => {
             >
               検索
             </Button>
+            <Query query={getAccountName}>
+              {({ data }) => {
+                console.log(data);
+                return (
+                  !_.isEmpty(data.categories) &&
+                  data.categories.map(c => <div key={c.id}>{c.name}</div>)
+                );
+              }}
+            </Query>
           </TextFieldWrapper>
         );
       }}

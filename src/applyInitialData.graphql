@@ -1,0 +1,3 @@
+#mutation applyInitialData($initialData: InitiallDataInput) {
+#  applyInitialData: (initialData: $initialData) @client
+#}

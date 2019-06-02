@@ -24,3 +24,13 @@ export const getSearchText = gql`
     searchText @client
   }
 `;
+
+export const getAccountName = gql`
+  query {
+    accountName @client {
+      id
+      name
+    }
+    categories @client
+  }
+`;
