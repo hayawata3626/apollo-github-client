@@ -38,12 +38,6 @@ const SearchField: React.FC<Props> = ({ text, onSearchRepository }: Props) => {
             }
           `
         });
-        console.log(searchText, "searchText");
-        // const { todos } = cache.readQuery({ query: GET_TODOS });
-        // cache.writeQuery({
-        //   query: GET_TODOS,
-        //   data: { todos: todos.concat([addTodo]) },
-        // });
       }}
     >
       {(changeSearchText, { client, loading, error }) => {
@@ -54,8 +48,6 @@ const SearchField: React.FC<Props> = ({ text, onSearchRepository }: Props) => {
             }
           `
         });
-
-        console.log(searchText, "searchText");
 
         const handleInputEnter = e => {
           setInputValue(e.target.value);

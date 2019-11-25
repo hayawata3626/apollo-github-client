@@ -4,9 +4,9 @@ import { CircularProgress } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import styled from "@emotion/styled";
 import _ from "lodash";
-import { getRepositories } from "./queries";
 import Repository from "./components/Repository";
 import SearchField from "./components/SearchField";
+import getRepositories from "./graphql/query/getRepositories.graphql";
 
 const ProgressWrapper = styled("div")`
   && {

@@ -14,7 +14,6 @@
     "apollo-client": "^2.6.0",
     "apollo-link": "^1.2.11",
     "apollo-link-http": "^1.5.14",
-    "graphql": "^14.3.0",
     "graphql-tag": "^2.10.1",
     "lodash": "^4.17.11",
     "prettier": "^1.17.1",
@@ -24,9 +23,17 @@
     "react-scripts": "3.0.1",
     "typescript": "3.4.5"
   },
+  "devDependencies": {
+    "@graphql-codegen/cli": "1.8.3",
+    "@graphql-codegen/typescript": "1.8.3",
+    "@graphql-codegen/typescript-operations": "1.8.3",
+    "@graphql-codegen/typescript-react-apollo": "1.8.3",
+    "graphql": "14.5.8"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "codegen": "graphql-codegen --config codegen.yml",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
