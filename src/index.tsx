@@ -7,7 +7,7 @@ import { createHttpLink } from "apollo-link-http";
 import { ApolloProvider } from "react-apollo";
 import initialState from "./state";
 import resolvers from "./resolvers";
-import App from "./App";
+import { App } from "./App";
 
 const cache = new InMemoryCache();
 

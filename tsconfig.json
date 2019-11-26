@@ -20,7 +20,7 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "files": ["./custom.d.ts"],
+  "files": ["./index.d.ts"],
   "include": [
     "src"
   ]

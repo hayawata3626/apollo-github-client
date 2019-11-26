@@ -1,68 +1,19 @@
-import React, { useState } from "react";
-import { Query } from "react-apollo";
-import { CircularProgress } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import styled from "@emotion/styled";
-import _ from "lodash";
-import Repository from "./components/Repository";
-import SearchField from "./components/SearchField";
-import getRepositories from "./graphql/query/getRepositories.graphql";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { TopPage } from "./page/TopPage";
+import { TopProvider } from "./context/topContext";
+// import getRepositories from "./graphql/query/getRepositories.graphql";
 
-const ProgressWrapper = styled("div")`
-  && {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-
-const App = () => {
-  const [text, setText] = useState<string>("");
-
-  const handleSearchRepository = text => {
-    setText(text);
-  };
-
+export const App: React.FC = () => {
   return (
-    <div>
-      <SearchField text={text} onSearchRepository={handleSearchRepository} />
-      <Query query={getRepositories} variables={{ searchText: text }}>
-        {({ data, loading, error }) => {
-          if (loading)
-            return (
-              <ProgressWrapper>
-                <CircularProgress />
-              </ProgressWrapper>
-            );
-          if (error) return `ERROR: ${error}`;
-
-          return (
-            <div>
-              {_.isEmpty(data.search.nodes) && (
-                <Typography align={"center"}>
-                  検索結果がありません。もう一度検索し直してください&#x1f62d;
-                </Typography>
-              )}
-              {data.search.nodes.map(repo => {
-                return (
-                  <Repository
-                    key={repo.id}
-                    url={repo.url}
-                    name={repo.name}
-                    starCount={repo.stargazers.totalCount}
-                  />
-                );
-              })}
-            </div>
-          );
-        }}
-      </Query>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/">
+          <TopProvider>
+            <TopPage />
+          </TopProvider>
+        </Route>
+      </Switch>
+    </Router>
   );
 };
-
-export default App;
