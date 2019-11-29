@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { TopPage } from "./page/TopPage";
-import { TopProvider } from "./context/topContext";
+import { TopProvider } from "./context/top/topContext";
 // import getRepositories from "./graphql/query/getRepositories.graphql";
 
 export const App: React.FC = () => {
