@@ -12,5 +12,4 @@ query GetRepositories($searchText: String!) {
             }
         }
     }
-    searchText @client
 }

@@ -1,14 +1,14 @@
 import * as React from "react";
-import { useContext } from "react";
-import { TopContext } from "../context/topContext";
-import { Typography } from "@material-ui/core";
+import { useTop } from "../context/topContext";
 
 export const TopPage: React.FC = () => {
-  const fruits = useContext<ReadonlyArray<string>>(TopContext);
+  const { search } = useTop();
+  console.log(search);
+  const repositories = search.nodes;
   return (
     <div>
-      {fruits.map((fruit, index) => (
-        <Typography key={index}>{fruit}</Typography>
+      {repositories.map(repository => (
+        <div>{repository.name}</div>
       ))}
     </div>
   );
