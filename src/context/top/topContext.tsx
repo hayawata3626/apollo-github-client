@@ -2,14 +2,15 @@ import React, { useContext } from "react";
 import { GetRepositoriesQueryResult } from "../../grpahql/generated/type";
 import { useRepositories } from "./useRepositories";
 
-const TopContext = React.createContext<Partial<GetRepositoriesQueryResult>>({});
+const TopContext = React.createContext({});
 
 export function useTop() {
   const context = useContext(TopContext);
   if (!context) {
     throw new Error(`useCount must be used within a CountProvider`);
   }
-  return context;
+  // TODO: キャスト以外の方法を探す
+  return context as GetRepositoriesQueryResult;
 }
 
 export const TopProvider: React.FC = ({ children }) => {
